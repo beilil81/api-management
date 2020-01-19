@@ -18,7 +18,12 @@ public interface ChoiceProxy {
     @GetMapping(value="/choice/all")
     String findAllChoice();
 
-    @Cacheable(cacheNames = "choice-by-id", key = "#choiceId")
+    @Cacheable(cacheNames = "choice-by-question-id", key = "#choiceId")
     @RequestMapping(value="/choice/all/question", method= RequestMethod.GET)
     String findChoicesByQuestionId(@RequestParam(value="questionId", defaultValue="2") Long questionId);
+
+    @Cacheable(cacheNames = "choice-by-choice-id", key = "#choiceId")
+    @RequestMapping(value="/choice/all/choiceId", method= RequestMethod.GET)
+    String findChoicesByChoiceId(@RequestParam(value="ChoiceId", defaultValue="1") Long choiceId);
+
 }

@@ -39,11 +39,16 @@ type Choice {
   percentage : Int,
   question : Question
 }
+type Answer {
+  choice :  Choice,
+  person : Person
+}
 type Query {
   listPerson:[Person],
   personByEmail(email: String): Person,
   listQuestion:[Question],
-  listChoice:[Choice]
+  listChoice:[Choice],
+  listAnswer:[Answer]
 }
 type Mutation {
   createPerson(firstName: String, lastName: String, mailAdresses: String, birthDate: String, profile: String):Person

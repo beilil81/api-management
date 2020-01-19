@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface IPersonQuery {
+public interface IQuery {
     PersonVO getPersonByEmail(@NotNull final String email);
 
     List<PersonVO> getListPerson();
@@ -21,5 +21,5 @@ public interface IPersonQuery {
 
     List<AnswerVO> getListAnswer();
 
-    List<AnswerVO>  getAnswerByQuestionId(@NotNull final Long questionId);
+    AnswerVO getAnswerByChoiceId(@NotNull final Long choiceId);
 }

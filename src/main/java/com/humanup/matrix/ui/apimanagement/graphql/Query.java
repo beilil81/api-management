@@ -3,10 +3,9 @@ package com.humanup.matrix.ui.apimanagement.graphql;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.humanup.matrix.ui.apimanagement.dto.*;
 import com.humanup.matrix.ui.apimanagement.graphql.builder.ObjectBuilder;
-import com.humanup.matrix.ui.apimanagement.graphql.interfaces.IPersonQuery;
+import com.humanup.matrix.ui.apimanagement.graphql.interfaces.IQuery;
 import com.humanup.matrix.ui.apimanagement.proxy.*;
 import com.humanup.matrix.ui.apimanagement.vo.*;
 import org.jetbrains.annotations.NotNull;
@@ -19,8 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class PersonQuery implements GraphQLQueryResolver, IPersonQuery {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonQuery.class);
+public class Query implements GraphQLQueryResolver, IQuery {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Query.class);
 
 
     @Autowired
@@ -178,7 +177,7 @@ public class PersonQuery implements GraphQLQueryResolver, IPersonQuery {
             ChoiceDTO choiceDTO = null;
             PersonDTO personDTO = null;
             try{
-                choiceDTO = ObjectBuilder.mapper.readValue(choiceProxy.findChoicesByQuestionId(c.), AnswerDTO.class);
+                choiceDTO = ObjectBuilder.mapper.readValue(choiceProxy.findChoicesByChoiceId(c.getChoiceId()), ChoiceDTO.class);
                 personDTO = ObjectBuilder.mapper.readValue(personProxy.findPersonByEmail(c.getEmailPerson()), PersonDTO.class);
             }catch (JsonProcessingException e){
                 LOGGER.error("Exception Parsing Answer {}", e);
@@ -191,7 +190,7 @@ public class PersonQuery implements GraphQLQueryResolver, IPersonQuery {
     }
 
     @Override
-    public List<AnswerVO> getAnswerByChoiceId(@NotNull Long choiceId) {
+    public AnswerVO getAnswerByChoiceId(@NotNull Long choiceId) {
         ChoiceDTO choiceDTO = null;
         PersonDTO personDTO = null;
         try {
@@ -200,18 +199,10 @@ public class PersonQuery implements GraphQLQueryResolver, IPersonQuery {
         }catch (JsonProcessingException e) {
             LOGGER.error("Exception Parsing List<AnswerVO> ", e);
         }
-        return answerListDTO.stream().map(c -> {
-            ChoiceDTO choiceDTO = null;
-            try{
-                choiceDTO = ObjectBuilder.mapper.readValue(answerProxy.findAnswerByChoiceId(c.getChoiceId()), ChoiceDTO.class);
-            }catch (JsonProcessingException e){
-                LOGGER.error("Exception Parsing Question {}", c.getChoiceId(), e);
-            }
-            return AnswerVO.builder()
+        return AnswerVO.builder()
                     .choice(ObjectBuilder.buildChoice(choiceDTO))
-                    .question(ObjectBuilder.buildQuestion(choiceDTO))
+                    .person(ObjectBuilder.buildPerson(personDTO))
                     .build();
-        }).collect(Collectors.toList());
     }
 
 }
