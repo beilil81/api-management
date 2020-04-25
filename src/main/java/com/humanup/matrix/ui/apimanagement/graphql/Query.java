@@ -58,15 +58,15 @@ public class Query implements GraphQLQueryResolver, IQuery {
                     } catch (JsonProcessingException e) {
                         LOGGER.error("Exception Parsing Profile {}", p.getProfile(), e);
                     }
-                    return new PersonVO.Builder()
-                            .setBirthDate(p.getBirthDate())
-                            .setFirstName(p.getFirstName())
-                            .setLastName(p.getLastName())
-                            .setMailAdresses(p.getMailAdresses())
-                            .setProfile(ObjectBuilder.buildProfile(profile))
-                            .setSkills(ObjectBuilder.buildCollectionSkills(p))
-                            .setInterviews(ObjectBuilder.buildCollectionInterviewByEmailPerson(p.getMailAdresses(),collaboratorManagementProxy))
-                            .setProjects(ObjectBuilder.buildCollectionProjectByEmailPerson(p.getMailAdresses(),collaboratorManagementProxy))
+                    return PersonVO.builder()
+                            .birthDate(p.getBirthDate())
+                            .firstName(p.getFirstName())
+                            .lastName(p.getLastName())
+                            .mailAdresses(p.getMailAdresses())
+                            .profile(ObjectBuilder.buildProfile(profile))
+                            .skillVOList(ObjectBuilder.buildCollectionSkills(p))
+                            .interviews(ObjectBuilder.buildCollectionInterviewByEmailPerson(p.getMailAdresses(),collaboratorManagementProxy))
+                            .projects(ObjectBuilder.buildCollectionProjectByEmailPerson(p.getMailAdresses(),collaboratorManagementProxy))
                             .build();
                 }).collect(Collectors.toList());
     }
@@ -85,14 +85,14 @@ public class Query implements GraphQLQueryResolver, IQuery {
         } catch (JsonProcessingException e) {
             LOGGER.error("Exception Parsing  Person {}", email, e);
         }
-        return new PersonVO.Builder()
-                .setBirthDate(personDTO.getBirthDate())
-                .setFirstName(personDTO.getFirstName())
-                .setLastName(personDTO.getLastName())
-                .setMailAdresses(personDTO.getMailAdresses())
-                .setProfile(ObjectBuilder.buildProfile(profileDTO))
-                .setSkills(ObjectBuilder.buildCollectionSkills(personDTO))
-                .setProjects(ObjectBuilder.buildCollectionProjects(projectsDTO))
+        return PersonVO.builder()
+                .birthDate(personDTO.getBirthDate())
+                .firstName(personDTO.getFirstName())
+                .lastName(personDTO.getLastName())
+                .mailAdresses(personDTO.getMailAdresses())
+                .profile(ObjectBuilder.buildProfile(profileDTO))
+                .skillVOList(ObjectBuilder.buildCollectionSkills(personDTO))
+                .projects(ObjectBuilder.buildCollectionProjects(projectsDTO))
                 .build();
     }
 

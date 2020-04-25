@@ -5,10 +5,25 @@ type Person {
   mailAdresses: String,
   birthDate: String,
   profile: Profile,
-  skillVOList: [Skill]
-  interviews: [Interview]
-  projects: [Project]
+  skillVOList: [Skill],
+  interviews: [Interview],
+  projects: [Project],
+  trainer: Trainer,
+  courses: [Course]
 }
+
+type Course {
+   courseTypeTitle: String,
+   title: String,
+   description: String,
+   startDate: String,
+   endDate: String
+}
+
+type Trainer {
+  phoneNumber: String
+}
+
 type Interview {
   interviewTitle: String,
   interviewDescription: String,

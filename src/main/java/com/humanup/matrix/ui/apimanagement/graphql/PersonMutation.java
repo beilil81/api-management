@@ -28,8 +28,8 @@ public class PersonMutation implements GraphQLMutationResolver , IPersonMutation
                 .setProfile(profile)
                 .build();
         PersonDTO savePerson = ObjectBuilder.mapper.readValue(personProxy.savePerson(person),PersonDTO.class);
-        return new PersonVO.Builder()
-        .setMailAdresses(savePerson.getMailAdresses())
+        return  PersonVO.builder()
+        .mailAdresses(savePerson.getMailAdresses())
         .build();
     }
 }
