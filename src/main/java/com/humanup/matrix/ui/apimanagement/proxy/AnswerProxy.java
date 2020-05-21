@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "qcm-app-v1")
-public interface AnswerProxy {
+public interface    AnswerProxy {
 
     @CachePut(cacheNames = "answer_by_answerId", key = "#answer.answerId")
     @PostMapping(value="/answer")
