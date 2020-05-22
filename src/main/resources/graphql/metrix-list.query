@@ -1,0 +1,70 @@
+{
+
+listSkill{
+  libelle
+}
+
+  listProject{
+    projectTitle,
+    projectDescription
+  }
+
+  listProfile{
+    profileTitle
+  }
+
+  listReviews{
+    internEmail
+    createdOn
+    score
+  }
+  listCourses{
+    courseTypeTitle
+    trainerEmail
+  }
+
+  listTrainers {
+    name
+    phone
+    email
+  }
+
+
+
+  personByEmail(email:"yelouardi@sqli.com"){
+    firstName
+    lastName
+    mailAdresses
+    birthDate
+    profile {
+      profileTitle
+      profileDescription
+      countPerson
+    }
+
+  }
+  listInterviewByEmail(email:"yelouardi@sqli.com"){
+    interviewTitle
+    interviewDate
+  }
+  trainersByEmail(email:"sogeti@email.com"){
+    name
+    address
+    phone
+  }
+  listReviewsByEmail(email:"yelouardi@sqli.com"){
+    courseTitle
+    createdOn
+    score
+  }
+  listProjectByEmail(email:"yelouardi@sqli.com"){
+    projectTitle
+    projectDescription
+  }
+  listCoursesByEmail(email:"yelouardi@sqli.com"){
+    courseTypeTitle
+    trainerEmail
+    startDate
+    endDate
+  }
+}

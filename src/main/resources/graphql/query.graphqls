@@ -8,20 +8,40 @@ type Person {
   skillVOList: [Skill],
   interviews: [Interview],
   projects: [Project],
-  trainer: Trainer,
-  courses: [Course]
+  courses: [Course],
+  reviews: [Review]
 }
 
 type Course {
    courseTypeTitle: String,
+   trainerEmail: String,
    title: String,
    description: String,
    startDate: String,
-   endDate: String
+   endDate: String,
+   reviews: [Review]
+}
+
+type CourseType {
+   typeTitle: String
 }
 
 type Trainer {
-  phoneNumber: String
+  name: String,
+  address: String,
+  phone: String,
+  email: String
+}
+
+type Intern {
+  emailPerson: String
+}
+
+type Review {
+  courseTitle: String,
+  internEmail: String,
+  createdOn: String,
+  score: String
 }
 
 type Interview {
@@ -59,12 +79,37 @@ type Answer {
   person : Person
 }
 type Query {
-  listPerson:[Person],
+  listAnswer: [Answer],
+  listAnswerByEmail(email: String): [Answer],
+  answerByChoiceId(choiceId: Int): Answer,
+  listChoice: [Choice],
+  listChoiceByEmail(email: String): [Choice],
+  choicesByQuestionId(questionId: Int): [Choice],
+  listProject: [Project],
+  listProjectByEmail(email: String): [Project],
+  listInterview: [Interview],
+  listInterviewByEmail(email: String): [Interview],
+  listCourses: [Course],
+  listCoursesByEmail(email: String): [Course],
+  listCourseTypes: [CourseType],
+  listPerson: [Person],
   personByEmail(email: String): Person,
-  listQuestion:[Question],
-  listChoice:[Choice],
-  listAnswer:[Answer]
+  listProfile: [Profile],
+  listQuestion: [Question],
+  listReviews: [Review],
+  listReviewsByEmail(email: String): [Review],
+  listSkill: [Skill],
+  listTypeSkills: [TypeSkills],
+  listTrainers: [Trainer],
+  trainersByEmail(email: String): Trainer
 }
 type Mutation {
-  createPerson(firstName: String, lastName: String, mailAdresses: String, birthDate: String, profile: String):Person
+  createPerson(firstName: String, lastName: String, mailAdresses: String, birthDate: String, profile: String): Person,
+  createProfile(profileTitle: String, profileDescription: String): Profile,
+  createSkill(idTypeSkills: Int, libelle: String, description: String): Skill,
+  createTypeSkill(titleSkill :String): TypeSkills,
+  createCourseType(typeTitle: String): CourseType,
+  createTrainer(name: String, address: String, phone: String, email: String): Trainer,
+  createCourse(idType: String, idTrainer: String, title: String, description: String, startDate: String, endDate: String): Course,
+  createReview(internId: String, courseId: String, createdOn: String, score: Int) : Review
 }

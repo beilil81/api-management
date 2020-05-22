@@ -1,0 +1,22 @@
+
+  mutation {
+    createTypeSkill(titleSkill: "REACT"){
+      titleSkill
+    }
+
+     createProfile(profileTitle: "Architecte",
+          profileDescription: "Architecte Solution & Technique "){
+          profileTitle
+        }
+
+        createPerson(
+           firstName : "ycas",
+            lastName:"ok",
+            mailAdresses:"ydc@h.com",
+            birthDate:"1990-09-12",
+            profile:"Developpeur Snior"
+          ){
+            mailAdresses
+          }
+  }
+

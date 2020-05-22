@@ -1,21 +1,23 @@
 package com.humanup.matrix.ui.apimanagement.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
-@FieldDefaults(level= AccessLevel.PRIVATE)
+import java.time.LocalDateTime;
+
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-@ToString(of={"courseId","internId","course","intern","createdOn","score"})
+@ToString(of = {"courseId", "internId", "courseTitle", "internEmail", "createdOn", "score"})
 public class ReviewDTO {
-    long courseId;
-    long internId;
-    String courseTitle;
-    String internEmail;
-    Date createdOn;
-    int score;
+  @JsonIgnore long courseId;
+  @JsonIgnore long internId;
+  String courseTitle;
+  String internEmail;
+  LocalDateTime createdOn;
+  int score;
 }
