@@ -11,10 +11,13 @@ import com.humanup.matrix.ui.apimanagement.proxy.CollaboratorManagementProxy;
 import com.humanup.matrix.ui.apimanagement.proxy.CourseProxy;
 import com.humanup.matrix.ui.apimanagement.proxy.ReviewProxy;
 import com.humanup.matrix.ui.apimanagement.vo.*;
+import graphql.schema.DataFetchingEnvironment;
+import graphql.servlet.GraphQLContext;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -235,5 +238,11 @@ public class ObjectBuilder {
       LOGGER.error("Exception Parsing   List<ProjectVO>  ", e);
       return Collections.emptyList();
     }
+  }
+
+  public static String getTokenFromGraphQL(final DataFetchingEnvironment env) {
+    GraphQLContext context =  env.getContext();
+    HttpServletRequest request = context.getHttpServletRequest().get();
+    return request.getHeader("Authorization");
   }
 }

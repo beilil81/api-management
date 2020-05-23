@@ -104,6 +104,7 @@ type Query {
   trainersByEmail(email: String): Trainer
 }
 type Mutation {
+  authentication(email: String, password: String): String,
   createPerson(firstName: String, lastName: String, mailAdresses: String, birthDate: String, profile: String): Person,
   createProfile(profileTitle: String, profileDescription: String): Profile,
   createSkill(idTypeSkills: Int, libelle: String, description: String): Skill,

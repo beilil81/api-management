@@ -8,12 +8,16 @@ import com.humanup.matrix.ui.apimanagement.graphql.builder.ObjectBuilder;
 import com.humanup.matrix.ui.apimanagement.graphql.query.IQueryPerson;
 import com.humanup.matrix.ui.apimanagement.proxy.*;
 import com.humanup.matrix.ui.apimanagement.vo.*;
+import graphql.GraphQL;
+import graphql.schema.DataFetchingEnvironment;
+import graphql.servlet.GraphQLContext;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
@@ -27,13 +31,16 @@ public class PersonQuery implements GraphQLQueryResolver, IQueryPerson {
 
   @Autowired ProfileProxy profileProxy;
 
+
+
   @Override
-  public List<PersonVO> getListPerson() {
+  public List<PersonVO> getListPerson(DataFetchingEnvironment env) {
+    String token = ObjectBuilder.getTokenFromGraphQL(env);
     List<PersonDTO> personListDTO = null;
     try {
       personListDTO =
           ObjectBuilder.mapper.readValue(
-              personProxy.findAllPerson(), new TypeReference<List<PersonDTO>>() {});
+              personProxy.findAllPerson(token), new TypeReference<List<PersonDTO>>() {});
 
     } catch (JsonProcessingException e) {
       LOGGER.error("Exception Parsing List<PersonVO> ", e);
@@ -61,13 +68,17 @@ public class PersonQuery implements GraphQLQueryResolver, IQueryPerson {
         .collect(Collectors.toList());
   }
 
+
+
   @Override
-  public PersonVO getPersonByEmail(@NotNull final String email) {
+  public PersonVO getPersonByEmail(DataFetchingEnvironment env, @NotNull final String email) {
+    String token = ObjectBuilder.getTokenFromGraphQL(env);
+
     PersonDTO personDTO = null;
     ProfileDTO profileDTO = null;
     try {
       personDTO =
-          ObjectBuilder.mapper.readValue(personProxy.findPersonByEmail(email), PersonDTO.class);
+          ObjectBuilder.mapper.readValue(personProxy.findPersonByEmail(email,token), PersonDTO.class);
       profileDTO =
               ObjectBuilder.mapper.readValue(
                       profileProxy.findProfileByTitle(personDTO.getProfile()), ProfileDTO.class);

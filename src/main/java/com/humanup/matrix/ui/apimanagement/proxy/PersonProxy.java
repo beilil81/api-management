@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "collaborator-app-v1")
+@FeignClient(name = "zuul-server/api-matrix")
 public interface PersonProxy {
     @CachePut(cacheNames = "person-by-email", key = "#person.mailAdresses")
     @PostMapping(value="/person")
@@ -18,9 +18,9 @@ public interface PersonProxy {
 
     @Cacheable(cacheNames ="person-all")
     @GetMapping(value="/person/all")
-    String findAllPerson();
+    String findAllPerson(@RequestHeader("Authorization") String authHeader);
 
     @Cacheable(cacheNames = "person-by-email", key = "#email")
     @RequestMapping(value="/person", method= RequestMethod.GET)
-    String findPersonByEmail(@RequestParam(value="email", defaultValue="robot@sqli.com") String email);
+    String findPersonByEmail(@RequestHeader("Authorization") String authHeader,@RequestParam(value="email", defaultValue="robot@sqli.com") String email);
 }
