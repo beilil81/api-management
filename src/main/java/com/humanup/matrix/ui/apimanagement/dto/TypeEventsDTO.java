@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @Builder
+@ToString(of= {"titleEvent"})
 public class TypeEventsDTO {
      String titleEvent;
 

@@ -236,4 +236,26 @@ public class ObjectBuilder {
       return Collections.emptyList();
     }
   }
+  @NotNull
+  public static EventVO buildEvent(@NotNull final EventDTO event) {
+    if(null!=event)
+      return EventVO.builder()
+              .libelle(event.getLibelle())
+              .description(event.getDescription())
+              .typeEvents(
+                      TypeEventsVO.builder()
+                              .titleEvent(null != event.getTypeEvents() ? event.getTypeEvents() : "")
+                              .build())
+              .build();
+    return null;
+  }
+  @NotNull
+  public static TypeEventsVO buildTypeEvents(@NotNull final TypeEventsDTO typeEvents) {
+    if(null!=typeEvents)
+      return TypeEventsVO.builder()
+              .titleEvent(typeEvents.getTitleEvent())
+              .build();
+    return null;
+  }
+
 }

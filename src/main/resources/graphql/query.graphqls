@@ -78,6 +78,14 @@ type Answer {
   choice :  Choice,
   person : Person
 }
+type Event {
+  libelle: String,
+  description: String,
+  typeEvents: TypeEvents
+}
+type TypeEvents {
+  titleEvent: String
+}
 type Query {
   listAnswer: [Answer],
   listAnswerByEmail(email: String): [Answer],
@@ -96,12 +104,14 @@ type Query {
   personByEmail(email: String): Person,
   listProfile: [Profile],
   listQuestion: [Question],
+  listEvent: [Event],
+  listTypeEvents: [TypeEvents],
   listReviews: [Review],
   listReviewsByEmail(email: String): [Review],
   listSkill: [Skill],
   listTypeSkills: [TypeSkills],
   listTrainers: [Trainer],
-  trainersByEmail(email: String): Trainer
+  trainersByEmail(email: String): Trainer,
 }
 type Mutation {
   createPerson(firstName: String, lastName: String, mailAdresses: String, birthDate: String, profile: String): Person,
@@ -111,5 +121,7 @@ type Mutation {
   createCourseType(typeTitle: String): CourseType,
   createTrainer(name: String, address: String, phone: String, email: String): Trainer,
   createCourse(idType: String, idTrainer: String, title: String, description: String, startDate: String, endDate: String): Course,
-  createReview(internId: String, courseId: String, createdOn: String, score: Int) : Review
+  createReview(internId: String, courseId: String, createdOn: String, score: Int) : Review,
+  createEvent(idTypeEvents: Int, libelle: String, description: String): Event,
+  createTypeEvent(titleEvent :String): TypeEvents
 }

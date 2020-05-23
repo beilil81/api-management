@@ -1,6 +1,5 @@
 package com.humanup.matrix.ui.apimanagement.proxy;
 
-import com.humanup.matrix.ui.apimanagement.dto.AnswerDTO;
 import com.humanup.matrix.ui.apimanagement.dto.EventDTO;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,8 +16,12 @@ public interface EventProxy {
     @Cacheable(cacheNames ="event-all")
     @GetMapping(value="/event/all")
     String findAllEvent();
+    @Cacheable(cacheNames = "reviews-by-email", key = "#email")
+    @RequestMapping(value = "/review/all/internemail", method = RequestMethod.GET)
+    String findEventsByEmail(@RequestParam(value = "email") String email);
+
 
     @Cacheable(cacheNames = "event-by-type", key = "#type")
     @RequestMapping(value="/event/all/type", method= RequestMethod.GET)
-    String findListEventByTypeTitle(@RequestParam(value="type", defaultValue="2") Long type);
+    String findListEventByType(@RequestParam(value="type", defaultValue="2") Long type);
 }

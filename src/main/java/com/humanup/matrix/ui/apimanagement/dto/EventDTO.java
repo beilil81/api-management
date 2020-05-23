@@ -10,10 +10,9 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @Builder
 public class EventDTO {
-
-	 Long  idTypeEvents;
-	 String libelle;
-	 String description;
-	 String typeEvents;
+	Long  idTypeEvents;
+	String libelle;
+	String description;
+	String typeEvents;
 
 }

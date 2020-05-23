@@ -2,31 +2,32 @@ package com.humanup.matrix.ui.apimanagement.graphql.mutation.impl;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.humanup.matrix.ui.apimanagement.dto.SkillDTO;
+import com.humanup.matrix.ui.apimanagement.dto.EventDTO;
 import com.humanup.matrix.ui.apimanagement.graphql.builder.ObjectBuilder;
-import com.humanup.matrix.ui.apimanagement.graphql.mutation.ISkillMutation;
-import com.humanup.matrix.ui.apimanagement.proxy.SkillProxy;
-import com.humanup.matrix.ui.apimanagement.vo.SkillVO;
+import com.humanup.matrix.ui.apimanagement.graphql.mutation.IEventMutation;
+import com.humanup.matrix.ui.apimanagement.proxy.EventProxy;
+import com.humanup.matrix.ui.apimanagement.vo.EventVO;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SkillMutation implements GraphQLMutationResolver , ISkillMutation {
+public class EventMutation implements GraphQLMutationResolver , IEventMutation {
     @Autowired
-    SkillProxy skillProxy;
+    EventProxy eventProxy;
+
 
     @Override
-    public SkillVO createSkill(@NotNull Long idTypeSkills, @NotNull String libelle, @NotNull String description) throws JsonProcessingException {
-        SkillDTO skillDTO = SkillDTO.builder()
+    public EventVO createEvent(@NotNull Long idTypeEvents, @NotNull String libelle, @NotNull String description) throws JsonProcessingException {
+        EventDTO eventDTO = EventDTO.builder()
                 .description(description)
                 .libelle(libelle)
-                .idTypeSkills(idTypeSkills)
+                .idTypeEvents(idTypeEvents)
                 .build();
-        SkillDTO saveSkill = ObjectBuilder.mapper.readValue(skillProxy.saveSkill(skillDTO),SkillDTO.class );
-return SkillVO.builder()
-        .libelle(saveSkill.getLibelle())
-        .description(saveSkill.getDescription())
-        .build();
+        EventDTO saveEvent = ObjectBuilder.mapper.readValue(eventProxy.saveEvent(eventDTO),EventDTO.class );
+        return EventVO.builder()
+                .libelle(saveEvent.getLibelle())
+                .description(saveEvent.getDescription())
+                .build();
     }
 }
