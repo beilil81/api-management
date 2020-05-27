@@ -15,10 +15,10 @@ public interface EventProxy {
 
     @Cacheable(cacheNames ="event-all")
     @GetMapping(value="/event/all")
-    String findAllEvent();
+    String findAllEvent(@RequestHeader("Authorization") String authHeader);
     @Cacheable(cacheNames = "reviews-by-email", key = "#email")
     @RequestMapping(value = "/review/all/internemail", method = RequestMethod.GET)
-    String findEventsByEmail(@RequestParam(value = "email") String email);
+    String findEventsByEmail(@RequestHeader("Authorization") String authHeader,@RequestParam(value="email", defaultValue="robot@sqli.com") String email);
 
 
     @Cacheable(cacheNames = "event-by-type", key = "#type")

@@ -56,6 +56,7 @@ type Project {
 type Skill {
   libelle: String,
   description: String,
+  emailPerson: string,
   typeSkills: TypeSkills
 }
 type TypeSkills {
@@ -104,16 +105,17 @@ type Query {
   personByEmail(email: String): Person,
   listProfile: [Profile],
   listQuestion: [Question],
-  listEvent: [Event],
-  listTypeEvents: [TypeEvents],
   listReviews: [Review],
   listReviewsByEmail(email: String): [Review],
   listSkill: [Skill],
   listTypeSkills: [TypeSkills],
   listTrainers: [Trainer],
   trainersByEmail(email: String): Trainer,
+  listEvent: [Event],
+  listTypeEvents: [TypeEvents]
 }
 type Mutation {
+  authentication(email: String, password: String): String,
   createPerson(firstName: String, lastName: String, mailAdresses: String, birthDate: String, profile: String): Person,
   createProfile(profileTitle: String, profileDescription: String): Profile,
   createSkill(idTypeSkills: Int, libelle: String, description: String): Skill,
@@ -122,6 +124,6 @@ type Mutation {
   createTrainer(name: String, address: String, phone: String, email: String): Trainer,
   createCourse(idType: String, idTrainer: String, title: String, description: String, startDate: String, endDate: String): Course,
   createReview(internId: String, courseId: String, createdOn: String, score: Int) : Review,
-  createEvent(idTypeEvents: Int, libelle: String, description: String): Event,
+  createEvent(libelle: String, description: String): Event,
   createTypeEvent(titleEvent :String): TypeEvents
 }

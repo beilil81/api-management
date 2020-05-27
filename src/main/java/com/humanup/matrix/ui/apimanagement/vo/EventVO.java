@@ -13,6 +13,7 @@ public class EventVO {
 
 	private String libelle;
 	private String description;
+	String emailPerson;
 	private TypeEventsVO typeEvents;
 
 }

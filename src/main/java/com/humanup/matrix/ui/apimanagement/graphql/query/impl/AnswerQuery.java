@@ -57,9 +57,9 @@ public class AnswerQuery implements GraphQLQueryResolver, IQueryAnswer {
                 choiceDTO =
                     ObjectBuilder.mapper.readValue(
                         choiceProxy.findChoicesByChoiceId(c.getChoiceId()), ChoiceDTO.class);
-                personDTO =
-                    ObjectBuilder.mapper.readValue(
-                        personProxy.findPersonByEmail(c.getEmailPerson()), PersonDTO.class);
+                //personDTO =
+                   // ObjectBuilder.mapper.readValue(
+                        //personProxy.findPersonByEmail(c.getEmailPerson()), PersonDTO.class);
               } catch (JsonProcessingException e) {
                 LOGGER.error("Exception Parsing Answer {}", e);
               }
@@ -79,9 +79,9 @@ public class AnswerQuery implements GraphQLQueryResolver, IQueryAnswer {
       choiceDTO =
           ObjectBuilder.mapper.readValue(
               choiceProxy.findChoicesByQuestionId(choiceDTO.getQuestionId()), ChoiceDTO.class);
-      personDTO =
-          ObjectBuilder.mapper.readValue(
-              personProxy.findPersonByEmail(personDTO.getMailAdresses()), PersonDTO.class);
+//      personDTO =
+//          ObjectBuilder.mapper.readValue(
+//              personProxy.findPersonByEmail(personDTO.getMailAdresses()), PersonDTO.class);
     } catch (JsonProcessingException e) {
       LOGGER.error("Exception Parsing List<AnswerVO> ", e);
     }
