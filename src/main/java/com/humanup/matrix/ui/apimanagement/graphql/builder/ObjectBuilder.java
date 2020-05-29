@@ -267,4 +267,10 @@ public class ObjectBuilder {
     return null;
   }
 
+
+  public static String getTokenFromGraphQL(final DataFetchingEnvironment env) {
+    GraphQLContext context =  env.getContext();
+    HttpServletRequest request = context.getHttpServletRequest().get();
+    return request.getHeader("Authorization");
+  }
 }
