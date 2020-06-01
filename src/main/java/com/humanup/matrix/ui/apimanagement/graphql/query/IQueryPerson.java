@@ -7,9 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public interface IQueryPerson {
-  PersonVO getPersonByEmail(DataFetchingEnvironment env,@NotNull final String email);
-
+  PersonVO getPersonByEmail(@NotNull final String email, DataFetchingEnvironment env);
   List<PersonVO> getListPerson(DataFetchingEnvironment env);
-
-
 }

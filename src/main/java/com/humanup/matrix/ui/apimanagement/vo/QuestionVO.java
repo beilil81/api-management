@@ -13,6 +13,5 @@ import lombok.experimental.FieldDefaults;
 @ToString(of= {"questionText","questionId"})
 public class QuestionVO {
      String questionText;
-     @JsonIgnore
-     Long questionId;
+     int questionId;
 }

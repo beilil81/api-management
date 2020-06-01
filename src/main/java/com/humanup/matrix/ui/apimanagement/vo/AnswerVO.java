@@ -11,8 +11,6 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 public class AnswerVO {
-
-     ChoiceVO choice;
-     PersonVO person;
-
+     int choiceId;
+     String emailPerson;
 }

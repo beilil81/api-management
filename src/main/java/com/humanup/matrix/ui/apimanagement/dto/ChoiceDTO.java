@@ -14,6 +14,6 @@ public class ChoiceDTO {
 
     String choiceText;
     int percentage;
-    Long questionId;
+    int questionId;
 
 }
