@@ -246,7 +246,7 @@ public class ObjectBuilder {
     return request.getHeader("Authorization");
   }
   @NotNull
-  public static EventVO buildEvent(@NotNull final EventDTO event) {
+  public static EventVO buildCollectionEvent(@NotNull final EventDTO event) {
     if(null!=event)
       return EventVO.builder()
               .libelle(event.getLibelle())
@@ -259,7 +259,7 @@ public class ObjectBuilder {
     return null;
   }
   @NotNull
-  public static TypeEventsVO buildTypeEvents(@NotNull final TypeEventsDTO typeEvents) {
+  public static TypeEventsVO buildCollectionTypeEvents(@NotNull final TypeEventsDTO typeEvents) {
     if(null!=typeEvents)
       return TypeEventsVO.builder()
               .titleEvent(typeEvents.getTitleEvent())
@@ -267,10 +267,4 @@ public class ObjectBuilder {
     return null;
   }
 
-
-  public static String getTokenFromGraphQL(final DataFetchingEnvironment env) {
-    GraphQLContext context =  env.getContext();
-    HttpServletRequest request = context.getHttpServletRequest().get();
-    return request.getHeader("Authorization");
-  }
 }

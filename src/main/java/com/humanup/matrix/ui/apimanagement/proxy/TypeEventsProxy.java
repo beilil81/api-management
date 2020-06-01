@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.humanup.matrix.ui.apimanagement.dto.TypeEventsDTO;
 
-@FeignClient(name = "event-matrix")
+@FeignClient(name = "zuul-server/api-eventmatrix")
 public interface TypeEventsProxy {
     @Cacheable(cacheNames = "typeEvent-by-id", key = "#typeId")
     @RequestMapping(value="/typesevents/id", method= RequestMethod.GET)

@@ -3,14 +3,12 @@ package com.humanup.matrix.ui.apimanagement.graphql.query.impl;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.humanup.matrix.ui.apimanagement.dto.*;
+import com.humanup.matrix.ui.apimanagement.dto.EventDTO;
 import com.humanup.matrix.ui.apimanagement.graphql.builder.ObjectBuilder;
 import com.humanup.matrix.ui.apimanagement.graphql.query.IQueryEvent;
 import com.humanup.matrix.ui.apimanagement.proxy.EventProxy;
-import com.humanup.matrix.ui.apimanagement.proxy.PersonProxy;
-import com.humanup.matrix.ui.apimanagement.proxy.ProfileProxy;
-import com.humanup.matrix.ui.apimanagement.proxy.TypeEventsProxy;
-import com.humanup.matrix.ui.apimanagement.vo.*;
+import com.humanup.matrix.ui.apimanagement.vo.EventVO;
+import com.humanup.matrix.ui.apimanagement.vo.TypeEventsVO;
 import graphql.schema.DataFetchingEnvironment;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -30,24 +28,15 @@ public class EventsQuery implements GraphQLQueryResolver, IQueryEvent {
   @Autowired
   EventProxy eventProxy;
 
-  @Autowired
-  TypeEventsProxy typeEventsProxy;
-
-  @Autowired PersonProxy personProxy;
-
   @Override
   public List<EventVO> getListEvent(DataFetchingEnvironment env) {
     String token = ObjectBuilder.getTokenFromGraphQL(env);
     List<EventDTO> eventDTO = null;
-    PersonDTO personDTO = null;
     try {
       eventDTO =
               ObjectBuilder.mapper.readValue(
                       eventProxy.findAllEvent(token), new TypeReference<List<EventDTO>>() {
                       });
-//      personDTO =
-//              ObjectBuilder.mapper.readValue(
-//                      personProxy.findPersonByEmail(c.getEmailPerson()), PersonDTO.class);
     } catch (final JsonProcessingException e) {
       LOGGER.error("Exception Parsing List<TypeEventsDTO> ", e);
     }
@@ -63,18 +52,13 @@ public class EventsQuery implements GraphQLQueryResolver, IQueryEvent {
   }
 
   @Override
-  public List<EventVO> getEventByEmailPerson(@NotNull String email, DataFetchingEnvironment env) {
+  public List<EventVO> getEventByEmailPerson(DataFetchingEnvironment env, @NotNull String email) {
     String token = ObjectBuilder.getTokenFromGraphQL(env);
     List<EventDTO> eventDTO = null;
-    PersonDTO personDTO = null;
-    TypeEventsDTO typeEventsDTO =null;
     try {
       eventDTO =
               (List<EventDTO>) ObjectBuilder.mapper.readValue(
                       eventProxy.findEventsByEmail(email,token), EventDTO.class);
-//      typeEventsDTO =
-//              ObjectBuilder.mapper.readValue(
-//                      typeEventsProxy.findTypeEventByTitle(eventDTO.getTypeEvents()), TypeEventsDTO.class);
     } catch (JsonProcessingException e) {
       LOGGER.error("Exception Parsing Event ", e);
     }
@@ -95,61 +79,5 @@ public class EventsQuery implements GraphQLQueryResolver, IQueryEvent {
   public List<EventVO> getListEventByTypeTitle(@NotNull String titleEvent) {
     return null;
   }
-
-//    public List<EventVO> getEventByEmailPerson(@NotNull String email) {
-//      List<EventDTO> eventDTO = null;
-//      try {
-//        eventDTO =
-//                (List<EventDTO>) ObjectBuilder.mapper.readValue(
-//                        eventProxy.findEventsByEmail(email), EventDTO.class);
-//      } catch (final JsonProcessingException e) {
-//        LOGGER.error("Exception Parsing List<EventDTO> ", e);
-//      }
-//      return EventVO.builder()
-//              .libelle(eventDTO.getLibelle())
-//              .description(eventDTO.getDescription())
-//              .emailPerson(eventDTO.getEmailPerson())
-//              .build();
-//    }
-
-
-//  @Override
-//  public List<EventVO> getListEventByTypeTitle(@NotNull final String titleEvent) {
-//
-//    List<EventDTO> eventListDTO = null;
-//    try {
-//      eventListDTO =
-//              ObjectBuilder.mapper.readValue(
-//                      eventProxy.findListEventByType(titleEvent),
-//                      new TypeReference<List<EventDTO>>() {});
-//    } catch (JsonProcessingException e) {
-//      LOGGER.error("Exception Parsing List<EventVO> ", e);
-//    }
-//    return getListEvent(eventListDTO);
-//  }
-
-
-//  @NotNull
-//  public List<EventVO> getEventVO(List<EventDTO> eventListDTO) {
-//    return eventListDTO.stream()
-//            .map(
-//                    c -> {
-//                      TypeEventsDTO typeEventsDTO = null;
-//                      try {
-//                        typeEventsDTO =
-//                                ObjectBuilder.mapper.readValue(
-//                                        typeEventsProxy.findByTypeEventsByID(c.getIdTypeEvents()),
-//                                        TypeEventsDTO.class);
-//                      } catch (JsonProcessingException e) {
-//                        LOGGER.error("Exception Parsing TypeEvents {}", c.getIdTypeEvents(), e);
-//                      }
-//                      return EventVO.builder()
-//                              .libelle(c.getLibelle())
-//                              .description(c.getDescription())
-//                              .emailPerson(c.getEmailPerson())
-//                              .build();
-//                    })
-//            .collect(Collectors.toList());
-//  }
 
 }
