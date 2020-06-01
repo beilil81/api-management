@@ -14,7 +14,6 @@ import lombok.experimental.FieldDefaults;
 public class QuestionDTO {
 
     String questionText;
-    @JsonIgnore
-    Long questionId;
+    int questionId;
 
 }

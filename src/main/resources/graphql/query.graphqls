@@ -67,23 +67,25 @@ type Profile {
   countPerson: Int
 }
 type Question {
-  questionText: String
+  questionText: String,
+  questionId: Int
 }
 type Choice {
-  choiceText :  String,
+  choiceText : String,
   percentage : Int,
-  question : Question
+  questionId : Int
 }
 type Answer {
-  choice :  Choice,
-  person : Person
+  choiceId: Int,
+  emailPerson: String
 }
 type Query {
   listAnswer: [Answer],
   listAnswerByEmail(email: String): [Answer],
-  answerByChoiceId(choiceId: Int): Answer,
   listChoice: [Choice],
   listChoiceByEmail(email: String): [Choice],
+  choicesByQuestionId(questionId: Int): [Choice],
+  answerByChoiceId(choiceId: Int): Answer,
   choicesByQuestionId(questionId: Int): [Choice],
   listProject: [Project],
   listProjectByEmail(email: String): [Project],
@@ -113,4 +115,7 @@ type Mutation {
   createTrainer(name: String, address: String, phone: String, email: String): Trainer,
   createCourse(idType: String, idTrainer: String, title: String, description: String, startDate: String, endDate: String): Course,
   createReview(internId: String, courseId: String, createdOn: String, score: Int) : Review
+  createQuestion(questionText: String, questionId: Int): Question,
+  createAnswer(choiceId: Int, emailPerson: String): Answer,
+  createChoice(choiceText :  String, percentage : Int, questionId: Int): Choice
 }

@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @ToString(of= {"choiceId","emailPerson"})
 public class AnswerDTO {
 
-    Long choiceId;
+    int choiceId;
     String emailPerson;
 
 }

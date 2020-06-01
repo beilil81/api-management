@@ -13,6 +13,6 @@ import lombok.experimental.FieldDefaults;
 public class ChoiceVO {
      String choiceText;
      int percentage;
-     QuestionVO question;
+     int questionId;
 }
 
