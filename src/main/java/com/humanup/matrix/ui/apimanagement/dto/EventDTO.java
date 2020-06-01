@@ -12,10 +12,9 @@ import java.io.Serializable;
 @Setter
 @Builder
 public class EventDTO implements Serializable {
-	Long  idTypeEvents;
+	int  idTypeEvents;
 	String libelle;
 	String description;
-	String emailPerson;
 	String typeEvents;
 
 }

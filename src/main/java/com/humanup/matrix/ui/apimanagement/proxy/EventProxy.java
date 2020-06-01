@@ -19,7 +19,7 @@ public interface EventProxy {
 
     @Cacheable(cacheNames = "events-by-email", key = "#emailPerson")
     @RequestMapping(value = "/event/all/person", method = RequestMethod.GET)
-    String findEventsByEmail(@RequestHeader("Authorization") String authHeader, @RequestParam(value="email", defaultValue="robot@sqli.com") String email);
+    String findEventsByEmail(@RequestParam(value="email", defaultValue="robot@sqli.com") String email, @RequestHeader("Authorization") String authHeader);
 
     @Cacheable(cacheNames = "event-by-type", key = "#type")
     @RequestMapping(value="/event/all/type", method= RequestMethod.GET)

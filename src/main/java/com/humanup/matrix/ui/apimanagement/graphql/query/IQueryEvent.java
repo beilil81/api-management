@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface IQueryEvent {
   List<EventVO> getListEvent(DataFetchingEnvironment env);
-  List<EventVO> getEventByEmailPerson(DataFetchingEnvironment env, @NotNull final String email);
-  List<EventVO> getListEventByTypeTitle(@NotNull final String titleEvent);
+  List<EventVO> getEventByEmailPerson(@NotNull final String email, DataFetchingEnvironment env);
+  List<EventVO> getListEventByTypeTitle(@NotNull final String titleEvent, DataFetchingEnvironment env);
 }

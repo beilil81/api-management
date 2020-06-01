@@ -6,6 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 public interface IEventMutation {
 
-    EventVO createEvent(@NotNull Long idTypeEvents, @NotNull  String libelle, @NotNull  String description ) throws JsonProcessingException ;
+    EventVO createEvent(@NotNull int idTypeEvents, @NotNull  String libelle, @NotNull  String description ) throws JsonProcessingException ;
 
     }

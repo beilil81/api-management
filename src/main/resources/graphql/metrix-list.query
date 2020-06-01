@@ -28,14 +28,6 @@ listSkill{
     phone
     email
   }
-listEvent{
-  libelle,
-  description
-}
-listTypeEvents{
-  titleEvent,
-  description
-}
 
 
   personByEmail(email:"yelouardi@sqli.com"){

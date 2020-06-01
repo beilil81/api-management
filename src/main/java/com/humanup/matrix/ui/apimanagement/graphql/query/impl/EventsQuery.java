@@ -38,8 +38,26 @@ public class EventsQuery implements GraphQLQueryResolver, IQueryEvent {
                       eventProxy.findAllEvent(token), new TypeReference<List<EventDTO>>() {
                       });
     } catch (final JsonProcessingException e) {
-      LOGGER.error("Exception Parsing List<TypeEventsDTO> ", e);
+      LOGGER.error("Exception Parsing List<EventDTO> ", e);
     }
+    return getEventVOS(eventDTO);
+  }
+
+  @Override
+  public List<EventVO> getEventByEmailPerson(@NotNull String email, DataFetchingEnvironment env) {
+    String token = ObjectBuilder.getTokenFromGraphQL(env);
+    List<EventDTO> eventDTO = null;
+    try {
+      eventDTO =
+              (List<EventDTO>) ObjectBuilder.mapper.readValue(
+                      eventProxy.findEventsByEmail(email,token), EventDTO.class);
+    } catch (JsonProcessingException e) {
+      LOGGER.error("Exception Parsing Event ", e);
+    }
+    return getEventVOS(eventDTO);
+  }
+  @NotNull
+  private List<EventVO> getEventVOS(List<EventDTO> eventDTO) {
     return Optional.ofNullable(eventDTO).orElse(Collections.emptyList()).stream()
             .map(event -> EventVO.builder()
                     .libelle(event.getLibelle())
@@ -51,32 +69,11 @@ public class EventsQuery implements GraphQLQueryResolver, IQueryEvent {
             .collect(Collectors.toList());
   }
 
-  @Override
-  public List<EventVO> getEventByEmailPerson(DataFetchingEnvironment env, @NotNull String email) {
-    String token = ObjectBuilder.getTokenFromGraphQL(env);
-    List<EventDTO> eventDTO = null;
-    try {
-      eventDTO =
-              (List<EventDTO>) ObjectBuilder.mapper.readValue(
-                      eventProxy.findEventsByEmail(email,token), EventDTO.class);
-    } catch (JsonProcessingException e) {
-      LOGGER.error("Exception Parsing Event ", e);
-    }
-    return Optional.ofNullable(eventDTO).orElse(Collections.emptyList()).stream()
-            .map(event -> EventVO.builder()
-                    .libelle(event.getLibelle())
-                    .description(event.getDescription())
-                    .typeEvents(
-                            TypeEventsVO.builder()
-                                    .titleEvent(null != event.getTypeEvents() ? event.getTypeEvents() : "")
-                                    .build()).build())
-            .collect(Collectors.toList());
-    }
 
 
 
   @Override
-  public List<EventVO> getListEventByTypeTitle(@NotNull String titleEvent) {
+  public List<EventVO> getListEventByTypeTitle(@NotNull String titleEvent, DataFetchingEnvironment env) {
     return null;
   }
 

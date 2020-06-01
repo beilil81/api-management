@@ -18,7 +18,7 @@ public class EventMutation implements GraphQLMutationResolver , IEventMutation {
 
 
     @Override
-    public EventVO createEvent(@NotNull Long idTypeEvents, @NotNull String libelle, @NotNull String description) throws JsonProcessingException {
+    public EventVO createEvent(@NotNull int idTypeEvents, @NotNull String libelle, @NotNull String description) throws JsonProcessingException {
         EventDTO eventDTO = EventDTO.builder()
                 .description(description)
                 .libelle(libelle)
